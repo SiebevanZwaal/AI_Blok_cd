@@ -114,8 +114,26 @@ def random():
             else:
                 print('Fout, hoger')
 
-def cp(fn):
-    with open(fn, 'r') as f:
-        for i in f.readlines():
-            if i != '\n' and i != '\t':
-                pass
+# def cp(fn):
+#     with open(fn, 'r') as f:
+#         for i in f.readlines():
+#             if i !='\n':
+#                 for x in range(len(i)):
+#                     if i[x] != '\t' and i[x] !=' ':
+#
+
+def cycver(ch,n):
+    c = []
+    a = []
+    if n > 0:
+        for i in range(n):
+            c.append(ch[i])
+        for i in range(n-8,0):
+            a.append(ch[i])
+        a.append(c)
+    else: # not done
+        for i in range(n):
+            c.append(ch[i])
+        for i in range(n-8,0):
+            a.append(ch[i])
+        a.append(c)
