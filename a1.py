@@ -137,3 +137,4 @@ def cycver(ch,n):
         for i in range(n-8,0):
             a.append(ch[i])
         a.append(c)
+#
