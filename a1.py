@@ -51,7 +51,7 @@ def count(lst,x):
             a+=1
     return a
 
-lst0 = [1,1,2,2,2,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,899]
+#lst0 = [1,1,2,2,2,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,899]
 
 def condiff(lst):
     '''returns biggest consecutive difference'''
@@ -118,6 +118,32 @@ def random():
             else:
                 print('Fout, hoger')
 
+def cp(filename):
+    import re
+    pattern = '[a-zA-Z]'
+    with open('newfile.txt','w') as newfile:
+        with open(filename, 'r') as f:
+            data=list(f.read())
+            for i in data:
+                if re.search(pattern, i):#check if string contains a-z and A-Z
+                    w = True
+                if i == '\n':
+                    w = False
+                    newfile.write('\n')
+                if w:
+                    newfile.write(i)
+cp('text.txt')
+
+
+
+
+
+
+
+
+
+
+
 
 def cycver(ch,n):
     '''deze functie verschuift bitjes, hij werkt ook als n groter is dan de lengte van ch en bij alle verschillende lengtes van ch'''
@@ -132,19 +158,19 @@ def cycver(ch,n):
     if n > 0:
         for i in range(n):
             c+=ch[i]
-        for i in range(n-l,0):
+        for i in range(n-l,0): # n is hier positief dus daarom aftrekken
             a+=ch[i]
         a+=c
         return a
     else:
         for i in range(n,0):
             c+=ch[i]
-        for i in range(0,n+l):
+        for i in range(0,n+l): #n is hier negatief dus daarom optellen
             a+=ch[i]
         c+=a
         return c
 
-#print(cycver(1011100101010010101010010101010,-74))
+#print(cycver(1011100,-4))
 
 
 
