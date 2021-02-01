@@ -114,13 +114,13 @@ def random():
             else:
                 print('Fout, hoger')
 
-# def cp(fn):
-#     with open(fn, 'r') as f:
-#         for i in f.readlines():
-#             if i !='\n':
-#                 for x in range(len(i)):
-#                     if i[x] != '\t' and i[x] !=' ':
-#
+def cp(fn):
+    with open(fn, 'r') as f:
+        for i in f.readlines():
+            if i !='\n':
+                for x in range(len(i)):
+                    if i[x] != '\t' and i[x] !=' ':
+
 
 def cycver(ch,n):
     '''deze functie verschuift bitjes, hij werkt ook als n groter is dan de lengte van ch en bij alle verschillende lengtes van ch'''
