@@ -33,8 +33,12 @@ def pir1(len, reverse= False):
 def strdiff():
     in0 = input('type a string')
     in1 = input('type a string')
+    if in0 > in1:
+        l =len(in0)
+    else:
+        l = len(in1)
 
-    for i in range(len(in0)):
+    for i in range(l):
         if in0[i] != in1[i]:
             return i
     return -1
@@ -114,13 +118,6 @@ def random():
             else:
                 print('Fout, hoger')
 
-def cp(fn):
-    with open(fn, 'r') as f:
-        for i in f.readlines():
-            if i !='\n':
-                for x in range(len(i)):
-                    if i[x] != '\t' and i[x] !=' ':
-
 
 def cycver(ch,n):
     '''deze functie verschuift bitjes, hij werkt ook als n groter is dan de lengte van ch en bij alle verschillende lengtes van ch'''
@@ -150,18 +147,17 @@ def cycver(ch,n):
 #print(cycver(1011100101010010101010010101010,-74))
 
 
-def Fib(f):
-    return Fib2(f,0,1)
 
 
-def Fib2(f,n0,n1):
-    if f == 0:
+
+def Fib(f,n0=0,n1=1):
+    if f == 1:
         return n1
     t = n1
     n1+=n0
     n0 =t
     f-=1
-    return Fib2(f,n0,n1)
+    return Fib(f,n0,n1)
 
 #print(Fib(9))
 
