@@ -123,18 +123,58 @@ def random():
 #
 
 def cycver(ch,n):
-    c = []
-    a = []
+    '''deze functie verschuift bitjes, hij werkt ook als n groter is dan de lengte van ch en bij alle verschillende lengtes van ch'''
+    ch = str(ch)
+    l = len(ch)
+    if n > l:
+        n = n%l
+    if n < -l:
+        n = n%-l
+    c = ''
+    a = ''
     if n > 0:
         for i in range(n):
-            c.append(ch[i])
-        for i in range(n-8,0):
-            a.append(ch[i])
-        a.append(c)
-    else: # not done
-        for i in range(n):
-            c.append(ch[i])
-        for i in range(n-8,0):
-            a.append(ch[i])
-        a.append(c)
-#
+            c+=ch[i]
+        for i in range(n-l,0):
+            a+=ch[i]
+        a+=c
+        return a
+    else:
+        for i in range(n,0):
+            c+=ch[i]
+        for i in range(0,n+l):
+            a+=ch[i]
+        c+=a
+        return c
+
+#print(cycver(1011100101010010101010010101010,-74))
+
+
+def Fib(f):
+    return Fib2(f,0,1)
+
+
+def Fib2(f,n0,n1):
+    if f == 0:
+        return n1
+    t = n1
+    n1+=n0
+    n0 =t
+    f-=1
+    return Fib2(f,n0,n1)
+
+#print(Fib(9))
+
+def ceasar(s,r):
+    a =['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+    sn=''
+    for e in s:
+        if e == ' ':
+            sn+=' '
+        else:
+
+            i = a.index(e.lower())
+            sn+=a[i+r]
+    return sn
+
+print(ceasar('help',1))
