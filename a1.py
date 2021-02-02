@@ -191,7 +191,6 @@ def ceasar(s,r):
     a =['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
     sn=''
     r = r%len(a)
-    print('r',r)
     for e in s:
         if e == ' ':
             sn+=' '
@@ -200,7 +199,7 @@ def ceasar(s,r):
             sn+=a[(i+r)%len(a)]
     return sn
 
-# print(ceasar('help',-1))
+print(ceasar('help',-9))
 
 def Fizzbuzz(getal):
     for i in range(1,getal+1):
