@@ -199,7 +199,8 @@ def ceasar(s,r):
             sn+=a[(i+r)%len(a)]
     return sn
 
-print(ceasar('help',-9))
+# for i in range(27):
+#     print(ceasar('I R Y A O S R I T C I A S A K L O',i))
 
 def Fizzbuzz(getal):
     for i in range(1,getal+1):
