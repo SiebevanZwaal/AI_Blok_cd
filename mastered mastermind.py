@@ -12,17 +12,24 @@ def guess(code, amount_guess=0):
     '''lets the player guess and returns amount of white and black pins'''
     playerguess = input('Guess a combination of uppercase letters between A to and with F\n')
     pins = {'black':0,'white':0}
-    print(code)
+    code1=[]
+    j=0
+    for i in code:
+        code1.append(i)
+    print(code1)
+    if list(playerguess) == code:
+        return 'U heeft gewonnen'
     for i in range(len(playerguess)):
-        print(playerguess[i] , code[i])
         if playerguess[i] == code[i]:
             pins['black'] +=1
-            code[i] = ''
-        else:
-                for j in range(len(code)):
-                    print(playerguess[i] , code[j])
-                    if playerguess[i] == code[j]:
-                        pins['white'] +=1
+            code1.remove(code1[i])
+    for i in range(len(playerguess)):
+        while code1 !=[] and j <len(code1):#for j in range(len(code1)):
+            #print(code1)
+            if playerguess[i] == code1[j]:
+                pins['white'] +=1
+                code1.remove(code1[j])
+            j+=1
 
     print(pins)
     guess(code)

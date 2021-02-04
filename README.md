@@ -1,2 +1,45 @@
-a1 https://canvas.hu.nl/courses/22629/assignments/122715
-yt file tutorial https://www.youtube.com/watch?v=Uh2ebFW8OYM&t=889s
+##Bronmateriaal
+
+    Boss, R. (2021, 19 januari). HU Structured Programming - Mastermind. Youtube. https://www.youtube.com/watch?v=rSzX2TtjvHA&feature=youtu.be
+
+    Kooi, B. (2005). YET ANOTHER MASTERMIND STRATEGY. ICGA Journal, 28(1), 13–20. https://doi.org/10.3233/icg-2005-28105
+
+
+
+
+
+##Module 1:
+
+    Mastermind waarbij de speler moet gokken
+
+
+
+##Algoritmes
+
+    A Simple Strategy
+
+    Looking One Step Ahead
+
+    A Worst Case Strategy
+
+    An Expected Size Strategy
+
+##Module 2
+
+    Mastermind waarbij de computer moet gokken
+
+
+
+##Functies
+
+#Generate()
+
+    Maakt een code van 4 letters tussen a en f
+
+    En roept guess aan
+
+
+
+#Guess()
+
+    Laat de speler lettercombinaties gokken en return pincombinatie 
