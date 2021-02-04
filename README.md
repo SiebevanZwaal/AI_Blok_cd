@@ -1,4 +1,4 @@
-Bronmateriaal
+### Bronmateriaal
 
     Boss, R. (2021, 19 januari). HU Structured Programming - Mastermind. Youtube. https://www.youtube.com/watch?v=rSzX2TtjvHA&feature=youtu.be
 
@@ -8,30 +8,30 @@ Bronmateriaal
 
 
 
-Module 1:
+### Module 1:
 
     Mastermind waarbij de speler moet gokken
 
 
 
-    Algoritmes
+## Algoritmes
 
-        A Simple Strategy
+    A Simple Strategy
 
-        Looking One Step Ahead
+    Looking One Step Ahead
 
-        A Worst Case Strategy
+    A Worst Case Strategy
 
-        An Expected Size Strategy
+    An Expected Size Strategy
 
-Module 2
+### Module 2
 
     Mastermind waarbij de computer moet gokken
 
 
 
 
-Generate()
+## Generate()
 
     Maakt een code van 4 letters tussen a en f
 
@@ -39,6 +39,6 @@ Generate()
 
 
 
-Guess()
+## Guess()
 
     Laat de speler lettercombinaties gokken en return pincombinatie 
