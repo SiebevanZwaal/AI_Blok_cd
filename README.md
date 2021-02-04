@@ -40,6 +40,6 @@
 
 
 
-#Guess()
+##Guess()
 
     Laat de speler lettercombinaties gokken en return pincombinatie 
