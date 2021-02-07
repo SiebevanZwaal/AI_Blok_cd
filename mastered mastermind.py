@@ -32,9 +32,7 @@ def guess(code, amount_guess=0):
             if dct[i]:
                 if playerguesslist[i] == code[j]:
                     pins['white'] +=1
-                    print(code,'code',playerguesslist[i],'playerguesslist[i]')
-
-                break
+                    break
             j+=1
         i+=1
 
