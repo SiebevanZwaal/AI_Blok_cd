@@ -7,6 +7,7 @@ def menu():
     press = int(input(''))
     generate(press)
 
+#*** probeer de for loops te verminderen | ook meer annotations bij complexe codes***    
 def makeguesslist(exclude = '',include=''):
     colorlist = []
 
@@ -26,7 +27,7 @@ def makeguesslist(exclude = '',include=''):
                     guesslist.append([colorlist[i0],colorlist[i1],colorlist[i2],colorlist[i3]])
     return guesslist
 
-
+#*** probeer spaties tussen codes te zetten zodat het makkelijker te lezen is | ook meer annotations bij complexe codes  ***    
 def generate(press):
     '''generates a random set of four letters representing colors'''
     global colordict
@@ -62,6 +63,7 @@ def generate(press):
     elif press == 2:
         simple_strategy(playercode,guesslist)
 
+# line 103, probeer die if statement in 2 te delen | ook meer annotations bij complexe codes
 def guess(code,  playerguess ):
     '''lets the player guess and returns amount of white and black pins'''
 
@@ -113,8 +115,7 @@ def guess(code,  playerguess ):
 
     #return guess(code,playerguess,amount_guess)
 
-
-
+# meer annotations bij complexe codes voor lezers
 def randomguess_strategy(code,guesslist):
     '''algoritm to solve mastermind game'''
     amountguessedlist = []
@@ -132,6 +133,7 @@ def randomguess_strategy(code,guesslist):
 
     print(total/len(amountguessedlist),'tries on average when tested a 100 times')
 
+# meer enters tussen je code zodat het meer leesbaar is
 def simple_strategy(code,guesslist):
     '''algoritm to solve mastermind game'''
     amountguessedlist = []
