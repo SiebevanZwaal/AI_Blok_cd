@@ -1,29 +1,23 @@
 from random import randint
 
-#annotations
-#enter
-#nested for loops
+
 
 
 
 def menu():
+    '''creates a menu and calls generate with the desired number corresponding to a algoritm'''
+
     print('If you want to play the game mastermind press 0')
     print('If you want to try the random strategy algorithm to see how efficient it works press 1')
     print('If you want to try the simple strategy algorithm to see how it performs press 2')
+    print('If you want to try the worst case algorithm to see how it performs press 3')
+    print('If you want to try the siebe algorithm to see how it performs press 4')
     press = int(input(''))
     generate(press)
 
-#*** probeer de for loops te verminderen | ook meer annotations bij complexe codes***    
-def makeguesslist(exclude = '',include=''):
-    # colorlist = []
-    #
-    # for color in colordict.values():
-    #     if exclude !=' ':
-    #         if color not in exclude:
-    #             colorlist.append(color)
-    #     elif include != '':
-    #         if color in include:
-    #             colorlist.append(color)
+
+def makeguesslist():
+    '''returns a list with al possible combinations of "['A','B','C','D','E','F']"'''
 
     guesslist = []
     colorlist = ['A','B','C','D','E','F']
@@ -34,6 +28,7 @@ def makeguesslist(exclude = '',include=''):
                 for i3 in range(len(colorlist)):
                     guesslist.append([colorlist[i0],colorlist[i1],colorlist[i2],colorlist[i3]])
     return guesslist
+
 
 def generate_guesslist(possible_combinations,last_guess,feedback):
     ''''eliminates not possible combinations
@@ -47,7 +42,7 @@ def generate_guesslist(possible_combinations,last_guess,feedback):
     solutions = []
     for combination in possible_combinations:
                 for feed in feedback:
-                    g = guess(last_guess,combination)
+                    g = get_feedback(last_guess,combination)
                     if g == feed:
                         solutions.append(combination)
     return solutions
@@ -65,7 +60,7 @@ def generate_guesslist_worstcase(possible_combinations,last_guess,feedback):
         solutions = 0
 
         for combination in possible_combinations:
-            g = guess(last_guess,combination)
+            g = get_feedback(last_guess,combination)
             if g == feed:
                 solutions+=1
 
@@ -87,11 +82,12 @@ def generate(press):
     calls function based on the number pressed
     press = number to select a certain algoritm or to play the game
     '''
+
     global colordict
     colordict = {0:'A', 1:'B', 2:'C', 3:'D', 4:'E', 5:'F'}
-    playercode = ''
+    code = ''
     for i in range(4):  #maakt een random colorcode
-        playercode += colordict[int(randint(0,5))]
+        code += colordict[int(randint(0,5))]
 
     guesslist = makeguesslist()
 
@@ -105,67 +101,76 @@ def generate(press):
                     print('too long try again')
                 else:
                     break
-            g=guess(playercode,playerguess)
-            print(g,playercode)
+
+            g=get_feedback(code,playerguess)
+            print(g)
+
             if g == (4,0):
                 print('Gewonnen!')
                 again=input('type y if you want to play another match against the computer\ny/n:')
                 if again == 'n':
                     break
                 elif again == 'y':
-                    playercode = ''
+                    code = ''
                     for i in range(4):  #maakt een random colorcode
-                        playercode += colordict[int(randint(0,5))]
+                        code += colordict[int(randint(0,5))]
 
     elif press ==1:
-        randomguess_strategy(playercode,guesslist)
+        randomguess_strategy(code,guesslist)
+
 
     elif press == 2:
         totalamountoftries =0
         for i in range(1000):
-            playercode = ''
+            code = ''
             #maakt een random colorcode
             for x in range(4):
-                 playercode += colordict[int(randint(0,5))]
-            totalamountoftries +=simple_strategy(playercode,guesslist)
+                 code += colordict[int(randint(0,5))]
+            totalamountoftries +=simple_strategy(code,guesslist)
         with open('newfile.txt','a') as f:
             f.write(str(totalamountoftries/1000)+' tries for simple algoritm\n')
+
+
     elif press == 3:
-        print(worst_case(playercode,guesslist))
-        # totalamountoftries =0
-        # for i in range(500):
-        #     playercode = ''
-        #     #maakt een random colorcode
-        #     for x in range(4):
-        #         playercode += colordict[int(randint(0,5))]
-        #     totalamountoftries +=looking_ahead(playercode,guesslist)
-        # with open('newfile.txt','a') as f:
-        #     f.write(str(totalamountoftries/500)+' tries for looking one step ahead algoritm\n')
+        totalamountoftries =0
+        for i in range(10):
+            code = ''
+            #maakt een random colorcode
+            for x in range(4):
+                code += colordict[int(randint(0,5))]
+            totalamountoftries +=worst_case(code,guesslist)
+        with open('newfile.txt','a') as f:
+            f.write(str(totalamountoftries/10)+' tries for worst case algoritm\n')
+
+    elif press ==4:
+
+        totalamountoftries =0
+        for i in range(500000):
+            code = ''
+            #maakt een random colorcode
+            for x in range(4):
+                code += colordict[int(randint(0,5))]
+            totalamountoftries +=siebe_algorithm(code)
+        with open('newfile.txt','a') as f:
+            f.write(str(totalamountoftries/500000)+' tries for siebe algoritm\n')
 
 # line 103, probeer die if statement in 2 te delen | ook meer annotations bij complexe codes
-def guess(code, playerguess):
-    '''lets the player guess and returns amount of white and black pins'''
+def get_feedback(code, guess):
+    '''evaluates the guess compared to the code
+    returns amount of white and black pins as a tuple
+    '''
 
     pins = {'black':0,'white':0}
     dct = {0:True,1:True,2:True,3:True}
     lst = []
     blacklist = []
 
-
-    # if playerguess == code:
-    #     print('congrats you won')
-    #print(playerguess)
-
-
     i=0
-    while i < len(playerguess):
-        if playerguess[i] == code[i]:
+    while i < len(guess):
+        if guess[i] == code[i]:
             pins['black'] +=1
             dct[i] = False
-
         i+=1
-
-
 
     for k,v in dct.items():
         lst.append(k)
@@ -177,16 +182,17 @@ def guess(code, playerguess):
 
     playerindex = 0
     whitelist = []
-    while playerindex < len(playerguess):
+    while playerindex < len(guess):
         codeindex =0
-        if dct[playerindex]:
 
-            while playerguess[playerindex] in code and codeindex <len(code):
-                if playerguess[playerindex] == code[codeindex] and  codeindex not in blacklist and codeindex not in whitelist:
+        if dct[playerindex]:
+            while guess[playerindex] in code and codeindex <len(code):
+                if guess[playerindex] == code[codeindex] and  codeindex not in blacklist and codeindex not in whitelist:
                     pins['white'] +=1
                     whitelist.append(codeindex)
                     break
                 codeindex+=1
+
         playerindex+=1
 
 
@@ -196,17 +202,19 @@ def guess(code, playerguess):
 
 # meer annotations bij complexe codes voor lezers
 def randomguess_strategy(code,guesslist):
-    '''algoritm to solve mastermind game'''
+    '''algoritm to solve mastermind game by randomly guessing codes
+    returns the average amount of guesses to get the code when tested 1000 times
+    '''
 
     amountguessedlist = []
 
     # er wordt 100 keer gekeken naar het aantal guesses nodig om de code te kraken zodat er een beter beeld gemaakt kan worden van het gemiddeld aantal guesses
-    for i in range(100):
+    for i in range(1000):
         amountguessed =0
 
         # er wordt binnen onderstaande loop gekeken hoevaak hij moet gokken tot de code is geraden
         while True:
-            g = guess(code,guesslist[int(randint(1,len(guesslist))-1)])
+            g = get_feedback(code,guesslist[int(randint(1,len(guesslist))-1)])
             if g[0] == 4:
                 amountguessedlist.append(amountguessed)
                 break
@@ -217,43 +225,40 @@ def randomguess_strategy(code,guesslist):
     for amountguessed in amountguessedlist:
         total +=amountguessed
 
-    print(total/len(amountguessedlist),'tries on average when tested a 100 times')
+    print(total/len(amountguessedlist),f'tries on average when tested a {len(amountguessedlist)} times')
 
-# meer enters tussen je code zodat het meer leesbaar is
+
 def simple_strategy(code,guesslist):
-    '''algoritm to solve mastermind game'''
+    '''algoritm to solve mastermind game
+    gets the code by checking which combinations are not valid with the feedback given so far
+    returns amount of times guessed
+    '''
 
     amountguessedlist = []
     code = list(code)
     total =0
+    gl = guesslist
+    amountguessed =0
 
-    for j in range(1):
-        for i in range(1):
-            gl = guesslist
-            amountguessed =0
-            currentguess = ['A','A','A','A']
-            currentfeedback = [(0,0),(0,1),(0,2),(0,3),(0,4),(1,0),(1,1),(1,2),(1,3),(2,0),(2,1),(2,2),(3,0),(4,0)]
-            lastguess =0
-            while True:
-                if amountguessed !=0:
-                    gl =generate_guesslist(gl,currentguess,currentfeedback)
-                    currentguess =gl[0]     #int(randint(0,len(gl))-1)]
-                    if lastguess in gl:
-                        gl.remove(lastguess)
-                #print(len(gl))
+    #eerste keuze zal altijd "['A','A','A','A']" zijn maar het scheelt best veel rekenkracht om het te hardcoden
+    currentguess = ['A','A','A','A']
+    lastguess =0
 
-                #randomly guessing from possible guesses in gl(guesslist
+    while True:
+        if amountguessed !=0:
+            gl =generate_guesslist(gl,currentguess,currentfeedback)
+            currentguess =gl[0]
+            if lastguess in gl:
+                gl.remove(lastguess)
+        currentfeedback =get_feedback(code,currentguess)
+        lastguess = currentguess
 
-                currentfeedback =guess(code,currentguess)
+        if currentfeedback[0] == 4:
+            amountguessedlist.append(amountguessed+1)
+            break
+        amountguessed +=1
 
-                lastguess = currentguess
-
-
-                if currentfeedback[0] == 4:
-                    amountguessedlist.append(amountguessed+1)
-                    break
-                amountguessed +=1
-            total+=(amountguessed+1)
+    total+=(amountguessed+1)
 
     return total
 
@@ -270,62 +275,67 @@ def worst_case(code,guesslist):
     code = list(code)
     total =0
 
-    for j in range(1):
-        for i in range(1):
-            gl = guesslist
-            amountguessed =0
-            currentguess = ['A','A','B','B']
-            allfeedback = [(0,0),(0,1),(0,2),(0,3),(0,4),(1,0),(1,1),(1,2),(1,3),(2,0),(2,1),(2,2),(3,0),(4,0)]
-            minimal = 1296
-            while True:
-                if amountguessed !=0:
-                    if lastguess in gl:
-                        gl.remove(lastguess)
-                    gl =generate_guesslist(gl,currentguess,currentfeedback)
-                    for guess_fl in gl:
-                        contestant = generate_guesslist_worstcase(gl,guess_fl,allfeedback)
-                        print(contestant,'--> contestant',guess_fl,'-->guess_fl')
+    gl = guesslist
+    amountguessed =0
+    currentguess = ['A','A','B','B']
+    allfeedback = [(0,0),(0,1),(0,2),(0,3),(0,4),(1,0),(1,1),(1,2),(1,3),(2,0),(2,1),(2,2),(3,0),(4,0)]
+    minimal = 1296
 
-                        if contestant < minimal:
-                            minimal = contestant
-                            currentguess =guess_fl
+    while True:
+        if amountguessed !=0:
+            if lastguess in gl:
+                gl.remove(lastguess)
+            gl =generate_guesslist(gl,currentguess,currentfeedback)
+            for guess_fl in gl:
+                contestant = generate_guesslist_worstcase(gl,guess_fl,allfeedback)
+                print(contestant,'--> contestant',guess_fl,'-->guess_fl')
 
-                print(minimal,'--> minimal',currentguess,'--> currentguess',code,'--> code')
-                currentfeedback =guess(code,currentguess)
-                lastguess = currentguess
-                if currentfeedback[0] == 4:
-                    amountguessedlist.append(amountguessed+1)
-                    break
-                amountguessed +=1
-            total+=(amountguessed+1)
+                if contestant < minimal:
+                    minimal = contestant
+                    currentguess =guess_fl
+
+
+        print(minimal,'--> minimal',currentguess,'--> currentguess',code,'--> code')
+        currentfeedback =get_feedback(code,currentguess)
+        lastguess = currentguess
+
+        if currentfeedback[0] == 4:
+            amountguessedlist.append(amountguessed+1)
+            break
+
+        amountguessed +=1
+
+
+    total+=(amountguessed+1)
     return total
 
 
 
-def expected_size():
+def siebe_algorithm(code):
     '''algoritm to solve mastermind game'''
+    indexlist = ['1234','1243','1324','1342','1432','1423' ,
+                 '2134','2143','2314','2341','2413','2431' ,
+                 '3124','3142','3214','3241','3412','3421' ,
+                 '4123','4132','4213','4231','4312','4321']
 
 
-def merge_sort(arr, l,r):
-    if l<r:
-        m = (l+r)//2
-        merge_sort(arr, l,m)
-        merge_sort(arr, m+1,r)
-        merge(arr,l,m,r)
+    guess =''
+    for letter in 'ABCDEF':
+        feedback = get_feedback(code,letter*4)
+        if feedback[0]+feedback[1]>0:
+            for i in range(feedback[0]+feedback[1]):
+                guess += letter
+    amountofguesses =6
+    for i in indexlist:
+        f =get_feedback(code,guess[int(i[0])-1]+guess[int(i[1])-1]+guess[int(i[2])-1]+guess[int(i[3])-1])
+        amountofguesses+=1
+        if f ==(4,0):
+            break
 
-def merge(arr,l,m,r):
-    Larr = arr[l:m+1]
-    Rarr =arr[m+1:r+1]
+    return amountofguesses
 
-    j = i = 0
 
-    for e in range(l,r+1):
-        if Larr[i] <= Rarr[j]:
-            arr[e]= Larr[i]
-            i+=1
-        else:
-            arr[e]= Rarr[j]
-            j+=1
+
 
 
 def main():
