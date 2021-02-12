@@ -54,7 +54,11 @@ def generate_guesslist(possible_combinations,last_guess,feedback):
 
 
 def generate_guesslist_worstcase(possible_combinations,last_guess,feedback):
-
+    ''''eliminates not possible combinations
+    last guess = a guess from which the feedback is known
+    feedback = feedback on last guess
+    returns biggest worst case (number of possibilities per feedback)
+    '''
 
     lenworstcase =0
     for feed in feedback:
@@ -79,7 +83,10 @@ def generate_guesslist_worstcase(possible_combinations,last_guess,feedback):
 
 #*** probeer spaties tussen codes te zetten zodat het makkelijker te lezen is | ook meer annotations bij complexe codes  ***    
 def generate(press):
-    '''generates a random set of four letters representing colors'''
+    '''generates a random set of four letters representing colors
+    calls function based on the number pressed
+    press = number to select a certain algoritm or to play the game
+    '''
     global colordict
     colordict = {0:'A', 1:'B', 2:'C', 3:'D', 4:'E', 5:'F'}
     playercode = ''
@@ -136,7 +143,7 @@ def generate(press):
         #     f.write(str(totalamountoftries/500)+' tries for looking one step ahead algoritm\n')
 
 # line 103, probeer die if statement in 2 te delen | ook meer annotations bij complexe codes
-def guess(code,  playerguess ):
+def guess(code, playerguess):
     '''lets the player guess and returns amount of white and black pins'''
 
     pins = {'black':0,'white':0}
@@ -251,7 +258,13 @@ def simple_strategy(code,guesslist):
     return total
 
 def worst_case(code,guesslist):
-    '''algoritm to solve mastermind game'''
+    '''algoritm to solve mastermind game
+    works by calculating the amount of possibilities and determend the guess with the lowest worst case
+    until the answer is found
+    code = the secret code which has to be guessed
+    guesslist = a list of all possible combinations
+    returns the amount of tries it took to guess the secret code
+    '''
 
     amountguessedlist = []
     code = list(code)
@@ -269,7 +282,6 @@ def worst_case(code,guesslist):
                     if lastguess in gl:
                         gl.remove(lastguess)
                     gl =generate_guesslist(gl,currentguess,currentfeedback)
-
                     for guess_fl in gl:
                         contestant = generate_guesslist_worstcase(gl,guess_fl,allfeedback)
                         print(contestant,'--> contestant',guess_fl,'-->guess_fl')
@@ -279,17 +291,13 @@ def worst_case(code,guesslist):
                             currentguess =guess_fl
 
                 print(minimal,'--> minimal',currentguess,'--> currentguess',code,'--> code')
-
                 currentfeedback =guess(code,currentguess)
-
                 lastguess = currentguess
-
                 if currentfeedback[0] == 4:
                     amountguessedlist.append(amountguessed+1)
                     break
                 amountguessed +=1
             total+=(amountguessed+1)
-
     return total
 
 
