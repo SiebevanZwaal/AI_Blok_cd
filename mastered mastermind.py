@@ -36,22 +36,22 @@ def makeguesslist(exclude = '',include=''):
     return guesslist
 
 def generate_guesslist(possible_combinations,last_guess,feedback):
+    ''''eliminates not possible combinations
+    last guess = a guess from which the feedback is known
+    feedback = feedback on last guess
+    returns combinations which could be the secret code based on
+    '''
     if type(feedback) == type((0,0)) :
         feedback = [feedback]
-    # print(type(feedback))
-    #print('hij blijft hangen bij generate_guesslist')
 
     solutions = []
-    # print(len(possible_combinations))
-    # print(len(solution))
-    # print(len(possible_feedback))
     for combination in possible_combinations:
                 for feed in feedback:
                     g = guess(last_guess,combination)
                     if g == feed:
                         solutions.append(combination)
-    #print(solutions)
     return solutions
+
 
 def generate_guesslist_worstcase(possible_combinations,last_guess,feedback):
 
@@ -278,18 +278,11 @@ def worst_case(code,guesslist):
                             minimal = contestant
                             currentguess =guess_fl
 
-
-
-
                 print(minimal,'--> minimal',currentguess,'--> currentguess',code,'--> code')
-
-
-
 
                 currentfeedback =guess(code,currentguess)
 
                 lastguess = currentguess
-
 
                 if currentfeedback[0] == 4:
                     amountguessedlist.append(amountguessed+1)
