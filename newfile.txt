@@ -35,3 +35,5 @@
 16.569462 tries for siebe algoritm
 16.593026 tries for siebe algoritm
 16.589838 tries for siebe algoritm
+5.805 tries for simple algoritm
+5.812 tries for simple algoritm
